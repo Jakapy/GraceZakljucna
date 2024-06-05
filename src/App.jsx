@@ -18,11 +18,16 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Doughnut } from "react-chartjs-2";
+import { Grafi } from "./Grafi";
+
 export default function App() {
   const [data, setData] = useState([]);
   const [obcine, setObcine] = useState([]);
   const [selectedObcina, setSelectedObcina] = useState("all");
   const [search, setSearch] = useState("");
+  const [graf, setGraf] = useState(1);
 
   async function getSchools() {
     const response = await fetch("https://static.404.si/grace/");
@@ -36,9 +41,16 @@ export default function App() {
     setObcine(data);
   }
 
+  async function getGraf() {
+    const response = await fetch("https://static.404.si/grace/prebivalstvo/");
+    const data = await response.json();
+    setGraf(data);
+  }
+
   useEffect(() => {
     getSchools();
     getMunicipality();
+    getGraf();
   }, []);
 
   return (
@@ -70,6 +82,7 @@ export default function App() {
         </div>
       </div>
       <div className="container">
+        <Grafi data={graf}></Grafi>
         <div class="grid grid-cols-3 gap-4">
           {/* Uporabi map funkcijo, ki se bo sprehodila, čez vse šole in jih prikazala v obliki kartic. */}
           {/* Dodaj dva filtra: enega za filtriranje po obcini, drugega za filtriranje glede na poštno številko šole. */}
