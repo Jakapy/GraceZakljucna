@@ -25,13 +25,13 @@ export default function App() {
   const [search, setSearch] = useState("");
 
   async function getSchools() {
-    const response = await fetch("http://static.404.si/grace/");
+    const response = await fetch("https://static.404.si/grace/");
     const data = await response.json();
     setData(data);
   }
 
   async function getMunicipality() {
-    const response = await fetch("http://static.404.si/grace/obcine/");
+    const response = await fetch("https://static.404.si/grace/obcine/");
     const data = await response.json();
     setObcine(data);
   }
